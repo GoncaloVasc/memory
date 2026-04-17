@@ -251,8 +251,11 @@ Código:
     }
 
 O código começa por defenir o tamanho e a imagem que a carta deve ter quando está virada para cima e para baixo
+
 A função Reset() serve para rodar as cartas de volta para baixo após uma má escolha
+
 A função Flip() é utilizada quando o jogador clica numa carta, atualizando as suas varáiveis para poder ser virada
+
 A função Update() tem como objetivo detetar se a carta está no processo de ser virada ou não, controlando o tempo que esta demora a realizar a animação
 
 
