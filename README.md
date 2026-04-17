@@ -174,6 +174,17 @@ Código:
         }
     }
 
+A função SetDifficulty(Difficulty difficulty) vai olhar para a dificuldade escolhida pelo jogador antes do início de jogo para determinar quantas cartas devem ser colocadas no tabuleiro
+
+A função GetClickedCard() tem como objetivo determinar qual carta é que o jogador clicou recorrendo á classe Card 
+
+Se ambas as cartas tiverem imagens iguais, então será utilizada a função Collect(Card c1, Card c2), que tem como objetivo remover ambas as cartas selecionadas
+
+A função Reset() é utilizada para repor todas as cartas do tabuleiro
+
+A função Shuffle() tem como objetivo randomizar a ordem em que as cartas são colocadas para que todos os jogos tenham uma ordem diferenete
+
+
 Card
 
 A classe Card representa as diversas cartas presentes em cima do tabuleiro de jogo e controla todo sobre elas incluindo a imagem que elas apresentam e a mecânica de as virar ao contrário
@@ -259,3 +270,17 @@ A função Flip() é utilizada quando o jogador clica numa carta, atualizando as
 A função Update() tem como objetivo detetar se a carta está no processo de ser virada ou não, controlando o tempo que esta demora a realizar a animação
 
 
+Difficulty
+
+A classe Difficulty representa o nível de dificuldade do jogo de memória
+
+Código:
+
+    public enum Difficulty
+    {
+        Easy,
+        Medium,
+        Hard
+    }
+
+Este código apenas tem como função guardar a escolha do jogador sobre qual dificuldade quer jogar, sendo esta depois usada pela classe Board para determinar quantas cartas é que devem ser postas no tabuleiro
