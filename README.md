@@ -30,7 +30,7 @@ Estrutura do Código
 O projeto está divido em várias classes, cada uma responsável por um aspecto específico do jogo. Algumas das mais importantes:
 
 1.Game1: Classe principal do jogo que gere a lógica do jogo. Contém a inicialização, carregamento de conteúdo, atualização e métodos de desenho, e carrega o primeiro ecrã do jogo.
-2.Card: Classe que gere as cartas do tabuleiro. Inclui as mecânicas das cartas serem viradas e resetadas. 
+2.Card: Classe que gere as cartas do tabuleiro. Inclui as mecânicas das cartas serem viradas e resetadas e ainda as suas posições e texturas. 
 3.Diifficulty: Classe que gere a dificuldade do jogo. Contém todas as dificuldades que o jogo aprensenta.
 4.Board: Classe que gere o próprio tabuleiro. Inclui a quantidade de cartas que este deve ter baseado na dificuldade previamente escolhida, e a mecânica de resetar o tabuleiro
 
@@ -42,7 +42,7 @@ A pasta Content contém 3 outras pastas:
   Menu: Contém a fonte usada para todo o texto do jogo e as diversas imagens presentes no menu
   Sound: Inclui os diversos sons usados durante o jogo
 As pastas _Models e _Managers: 
-  Contém todas as classes e processos necessários á execução do jogo
+  Contém todas as classes e processos necessários á execução do jogo 
 
 Análise do Código
 
@@ -261,7 +261,7 @@ Código:
         }
     }
 
-O código começa por defenir o tamanho e a imagem que a carta deve ter quando está virada para cima e para baixo
+O código começa por defenir o tamanho, a posição e a imagem que a carta deve ter quando está virada para cima e para baixo
 
 A função Reset() serve para rodar as cartas de volta para baixo após uma má escolha
 
@@ -288,7 +288,7 @@ Este código apenas tem como função guardar a escolha do jogador sobre qual di
 
 CardPart
 
-A classe CardPart, faz que quando o jg 
+A classe CardPart tem como função animar as cartas a desaparecer
 
 Código:
 
