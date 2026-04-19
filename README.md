@@ -417,51 +417,9 @@ Código:
     }
 A função CardPart(), serve para animar a carta a dividir-se em 4 fragmentos, explodir e desaparecer
 
-• ResolveTurnState
-
-A classe ResolveTurnState é a lógica do jogo da memória.
-
-    public class ResolveTurnState : PlayState
-    {
-        public override void Update(GameManager gm)
-        {
-            base.Update(gm);
-
-            if (gm.FirstCard.Id == gm.SecondCard.Id && !gm.FirstCard.Flipping && !gm.SecondCard.Flipping)
-            {
-                gm.Board.Collect(gm.FirstCard, gm.SecondCard);
-                ScoreManager.NextTurn();
-
-                if (gm.Board.CardsLeft <= 0)
-                {
-                    gm.ChangeState(GameStates.Win);
-                    ScoreManager.Stop();
-                    ScoreManager.SaveScores();
-                    SoundManager.PlayVictoryFX();
-                }
-                else
-                {
-                    gm.ChangeState(GameStates.FlipFirstCard);
-                }
-            }
-
-            if (InputManager.MouseClicked && gm.FirstCard.Id != gm.SecondCard.Id)
-            {
-                gm.FirstCard.Flip();
-                gm.SecondCard.Flip();
-                ScoreManager.Miss();
-                gm.ChangeState(GameStates.FlipFirstCard);
-            }
-        }
-    }
-
-A função Update(GameManager gm) compara as cartas viradas em FlipFirstCardState e FlipSecondCardState. Se forem compativeis, desaparecem e são "recolhidas". Se não forem compatíveis as faces das cartas, voltam-se para trás e é diminuido o tempo que o jogador ainda tem para virar todas as cartas restantes.
-Se as cartas escolhidas forem compatíveis e não houverem mais cartas para virar, o jogador ganha.
-
-
 Ainda temos a pasta States que contem mais algumas funções e classes importantes ao funcionamento do jogo
 
-GameState
+• GameState
 
 Código:
 
@@ -473,7 +431,7 @@ Código:
 
 Classe que quando corrida corre as funções Update e Draw do game manager
 
-WinState
+• WinState
 
 Código:
 
@@ -514,7 +472,7 @@ Código:
 Classe de vitória, começa por ir buscar os graficos usados e posiciona-os na tela, de seguida verifica se o jogador clica e se esse o fizer muda o estado de jogo para o estado de menu
 
 
-FlipFirstCardState e FlipSecondCardState
+• FlipFirstCardState e FlipSecondCardState
 
 Classes do playstate dedicadas á ação do jogador ao escolher as cartas que quer revelar durante o decorrer do jogo. Trabalhando respetivamente a primeira e segunda carta escolhidas.
 
@@ -572,7 +530,7 @@ A função começa por correr um update e como a primeira, guarda na variavél c
 
 Se se verificar essa condições é virada a carta (card.Flip();) e guardada o seu valor na variavél gm.SecondCard e finaliza passando para o estado de jogo ResolveTurn
 
-ResolveTurnState
+• ResolveTurnState
 
 Código:
 
