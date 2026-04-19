@@ -291,6 +291,41 @@ A função Flip() é utilizada quando o jogador clica numa carta, atualizando as
 
 A função Update() tem como objetivo detetar se a carta está no processo de ser virada ou não, controlando o tempo que esta demora a realizar a animação
 
+• Button
+
+A classe Button dà um corpo clicável às cartas
+
+Código:
+
+public class Button : Sprite
+{
+    private readonly Rectangle _rectangle;
+    public bool Disabled { get; set; }
+
+    public Button(Texture2D tex, Vector2 pos) : base(tex, pos)
+    {
+        _rectangle = new((int)(pos.X - origin.X), (int)(pos.Y - origin.Y), tex.Width, tex.Height);
+    }
+
+    public event EventHandler OnClick;
+
+    public void Update()
+    {
+        color = Color.White;
+
+        if (_rectangle.Contains(InputManager.MouseRectangle))
+        {
+            color = Color.DarkGray;
+
+            if (InputManager.MouseClicked)
+            {
+                OnClick?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        if (Disabled) color *= 0.3f;
+    }
+}
 
 • Difficulty
 
