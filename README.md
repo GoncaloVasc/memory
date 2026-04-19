@@ -25,6 +25,14 @@ Funcionalidades
 Contém 3 dificuldades
 
 Controles "Point and Click"
+
+Distribuição aleatória das cartas
+
+Vitória
+
+Derrota
+
+Recomeço
 _________________________________________________________________________________
 Como jogar
 
