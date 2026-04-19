@@ -70,7 +70,7 @@ Análise do Código
 
 • Board
 
-A classe Board representa o próprio tabuleiro do jogo que contém as várias cartas necessárias ao gameplay, e distribui-as dependendo do tamanho da janela.
+A classe Board representa o próprio tabuleiro do jogo que contém as várias cartas necessárias ao gameplay, e calcula a sua distribuição dependendo do tamanho da janela.
 
 Código:
 
@@ -293,7 +293,7 @@ A função Update() tem como objetivo detetar se a carta está no processo de se
 
 • Button
 
-A classe Button dà um corpo clicável às cartas
+A classe Button dá um corpo clicável às cartas e efeito visuais.
 
 Código:
 
@@ -326,6 +326,10 @@ Código:
             if (Disabled) color *= 0.3f;
         }
     }
+
+São gerados botões por cima das cartas para que possam ser clicáveis
+
+A função Update() deteta se o rato está por cima da carta e desabilita-a se estiver a ser virada
 
 • Difficulty
 
