@@ -24,15 +24,13 @@ Funcionalidades
 
 Contém 3 dificuldades
 
-Controles "Point and Click"
-
 Distribuição aleatória das cartas
 
-Vitória
-
-Derrota
-
 Recomeço
+
+Controles "Point and Click"
+
+Vitória
 _________________________________________________________________________________
 Como jogar
 
@@ -72,7 +70,7 @@ Análise do Código
 
 • Board
 
-A classe Board representa o próprio tabuleiro do jogo que contém as várias cartas necessárias ao gameplay, aqui temos uma análise do código desta classe:
+A classe Board representa o próprio tabuleiro do jogo que contém as várias cartas necessárias ao gameplay, e distribui-as dependendo do tamanho da janela.
 
 Código:
 
