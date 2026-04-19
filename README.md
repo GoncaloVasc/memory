@@ -297,35 +297,35 @@ A classe Button dà um corpo clicável às cartas
 
 Código:
 
-public class Button : Sprite
-{
-    private readonly Rectangle _rectangle;
-    public bool Disabled { get; set; }
-
-    public Button(Texture2D tex, Vector2 pos) : base(tex, pos)
+    public class Button : Sprite
     {
-        _rectangle = new((int)(pos.X - origin.X), (int)(pos.Y - origin.Y), tex.Width, tex.Height);
-    }
+        private readonly Rectangle _rectangle;
+        public bool Disabled { get; set; }
 
-    public event EventHandler OnClick;
-
-    public void Update()
-    {
-        color = Color.White;
-
-        if (_rectangle.Contains(InputManager.MouseRectangle))
+        public Button(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
-            color = Color.DarkGray;
-
-            if (InputManager.MouseClicked)
-            {
-                OnClick?.Invoke(this, EventArgs.Empty);
-            }
+            _rectangle = new((int)(pos.X - origin.X), (int)(pos.Y - origin.Y), tex.Width, tex.Height);
         }
 
-        if (Disabled) color *= 0.3f;
+        public event EventHandler OnClick;
+
+        public void Update()
+        {
+            color = Color.White;
+
+            if (_rectangle.Contains(InputManager.MouseRectangle))
+            {
+                color = Color.DarkGray;
+
+                if (InputManager.MouseClicked)
+                {
+                    OnClick?.Invoke(this, EventArgs.Empty);
+                }
+            }
+
+            if (Disabled) color *= 0.3f;
+        }
     }
-}
 
 • Difficulty
 
