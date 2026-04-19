@@ -293,7 +293,7 @@ A função Update() tem como objetivo detetar se a carta está no processo de se
 
 • Button
 
-A classe Button dá um corpo clicável às cartas e efeito visuais.
+A classe Button representa um botão clicável na tela sob os srpites das cartas. Ela vem de Sprite, por isso pode ser inserida como qualquer outro sprite.
 
 Código:
 
@@ -415,4 +415,45 @@ Código:
             Globals.SpriteBatch.Draw(Texture, Position, _rectangle, Color.White * _scale, _rotation, origin, _scale, SpriteEffects.None, 1f);
         }
     }
+A função CardPart(), serve para animar a carta a dividir-se em 4 fragmentos, explodir e desaparecer
 
+• ResolveTurnState
+
+A classe ResolveTurnState é a lógica do jogo da memória.
+
+    public class ResolveTurnState : PlayState
+    {
+        public override void Update(GameManager gm)
+        {
+            base.Update(gm);
+
+            if (gm.FirstCard.Id == gm.SecondCard.Id && !gm.FirstCard.Flipping && !gm.SecondCard.Flipping)
+            {
+                gm.Board.Collect(gm.FirstCard, gm.SecondCard);
+                ScoreManager.NextTurn();
+
+                if (gm.Board.CardsLeft <= 0)
+                {
+                    gm.ChangeState(GameStates.Win);
+                    ScoreManager.Stop();
+                    ScoreManager.SaveScores();
+                    SoundManager.PlayVictoryFX();
+                }
+                else
+                {
+                    gm.ChangeState(GameStates.FlipFirstCard);
+                }
+            }
+
+            if (InputManager.MouseClicked && gm.FirstCard.Id != gm.SecondCard.Id)
+            {
+                gm.FirstCard.Flip();
+                gm.SecondCard.Flip();
+                ScoreManager.Miss();
+                gm.ChangeState(GameStates.FlipFirstCard);
+            }
+        }
+    }
+
+A função Update(GameManager gm) compara as cartas viradas em FlipFirstCardState e FlipSecondCardState. Se forem compativeis, desaparecem e são "recolhidas". Se não forem compatíveis as faces das cartas, voltam-se para trás e é diminuido o tempo que o jogador ainda tem para virar todas as cartas restantes.
+Se as cartas escolhidas forem compatíveis e não houverem mais cartas para virar, o jogador ganha.
