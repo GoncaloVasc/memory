@@ -62,7 +62,7 @@ As pastas _Models e _Managers:
 _________________________________________________________________________________
 Análise do Código
 
-Board
+• Board
 
 A classe Board representa o próprio tabuleiro do jogo que contém as várias cartas necessárias ao gameplay, aqui temos uma análise do código desta classe:
 
@@ -201,7 +201,7 @@ A função Reset() é utilizada para repor todas as cartas do tabuleiro
 A função Shuffle() tem como objetivo randomizar a ordem em que as cartas são colocadas para que todos os jogos tenham uma ordem diferenete
 
 
-Card
+• Card
 
 A classe Card representa as diversas cartas presentes em cima do tabuleiro de jogo e controla todo sobre elas incluindo a imagem que elas apresentam e a mecânica de as virar ao contrário
 
@@ -286,7 +286,7 @@ A função Flip() é utilizada quando o jogador clica numa carta, atualizando as
 A função Update() tem como objetivo detetar se a carta está no processo de ser virada ou não, controlando o tempo que esta demora a realizar a animação
 
 
-Difficulty
+• Difficulty
 
 A classe Difficulty representa o nível de dificuldade do jogo de memória
 
@@ -302,7 +302,7 @@ Código:
 Este código apenas tem como função guardar a escolha do jogador sobre qual dificuldade quer jogar, sendo esta depois usada pela classe Board para determinar quantas cartas é que devem ser postas no tabuleiro
 
 
-CardPart
+• CardPart
 
 A classe CardPart tem como função animar as cartas a desaparecer
 
