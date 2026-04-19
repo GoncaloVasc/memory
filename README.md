@@ -457,3 +457,160 @@ A classe ResolveTurnState é a lógica do jogo da memória.
 
 A função Update(GameManager gm) compara as cartas viradas em FlipFirstCardState e FlipSecondCardState. Se forem compativeis, desaparecem e são "recolhidas". Se não forem compatíveis as faces das cartas, voltam-se para trás e é diminuido o tempo que o jogador ainda tem para virar todas as cartas restantes.
 Se as cartas escolhidas forem compatíveis e não houverem mais cartas para virar, o jogador ganha.
+
+
+Ainda temos a pasta States que contem mais algumas funções e classes importantes ao funcionamento do jogo
+
+GameState
+
+Código:
+
+    public abstract class GameState
+    {
+        public abstract void Update(GameManager gm);
+        public abstract void Draw(GameManager gm);
+    }
+
+Classe que quando corrida corre as funções Update e Draw do game manager
+
+WinState
+
+Código:
+
+    public class WinState : GameState
+    {
+        private static Texture2D _texture;
+        private static Vector2 _position;
+        private static SpriteFont _font;
+        private static Vector2 _textPosition;
+        private static string _text = "";
+    
+        public WinState()
+        {
+            _texture = Globals.Content.Load<Texture2D>("Menu/win");
+            _font = Globals.Content.Load<SpriteFont>("Menu/font");
+            _position = new((Globals.Bounds.X - _texture.Width) / 2, (Globals.Bounds.Y - _texture.Height) / 2);
+        }
+    
+        public override void Update(GameManager gm)
+        {
+            if (InputManager.MouseClicked)
+            {
+                gm.ChangeState(GameStates.Menu);
+            }
+    
+            _text = ScoreManager.Score.ToString();
+            var size = _font.MeasureString(_text);
+            _textPosition = new((Globals.Bounds.X - size.X) / 2, _position.Y + (_texture.Height / 4));
+        }
+    
+        public override void Draw(GameManager gm)
+        {
+            Globals.SpriteBatch.Draw(_texture, _position, Color.White);
+            Globals.SpriteBatch.DrawString(_font, _text, _textPosition, Color.Black);
+        }
+    }
+
+Classe de vitória, começa por ir buscar os graficos usados e posiciona-os na tela, de seguida verifica se o jogador clica e se esse o fizer muda o estado de jogo para o estado de menu
+
+
+FlipFirstCardState e FlipSecondCardState
+
+Classes do playstate dedicadas á ação do jogador ao escolher as cartas que quer revelar durante o decorrer do jogo. Trabalhando respetivamente a primeira e segunda carta escolhidas.
+
+Código:
+
+FlipFirstCardState:
+
+    public class FlipFirstCardState : PlayState
+    {
+        public override void Update(GameManager gm)
+        {
+            base.Update(gm);
+    
+            var card = gm.Board.GetClickedCard();
+    
+            if (card is not null)
+            {
+                card.Flip();
+                gm.FirstCard = card;
+                gm.ChangeState(GameStates.FlipSecondCard);
+                ScoreManager.Start();
+            }
+        }
+    }
+
+A função começa por correr um update
+
+Depois guarda na variavél card o valor da carta em que o jogador clica ( var card = gm.Board.GetClickedCard(); )
+
+Verifica se o valor da carta não é nulo, ou seja se o jogador clicou numa carta valida.
+Se o jogador selecionou uma carta, esta é virada para cima (card.Flip();), é guardada o seu valor na variavel gm.FirstCard e troca o estado de jogo para a função FlipSecondCard (gm.ChangeState(GameStates.FlipSecondCard);
+)
+E dá inicio ao score manager (ScoreManager.Start();)
+
+FlipSecondCardState:
+
+    public class FlipSecondCardState : PlayState
+    {
+        public override void Update(GameManager gm)
+        {
+            base.Update(gm);
+    
+            var card = gm.Board.GetClickedCard();
+    
+            if (card is not null && card != gm.FirstCard)
+            {
+                card.Flip();
+                gm.SecondCard = card;
+                gm.ChangeState(GameStates.ResolveTurn);
+            }
+        }
+    }
+
+A função começa por correr um update e como a primeira, guarda na variavél card o valor da carta que o jogador escolhe, e verifica se esse não é nulo e se é diferente do escolhido anteriormente (card is not null && card != gm.FirstCard)
+
+Se se verificar essa condições é virada a carta (card.Flip();) e guardada o seu valor na variavél gm.SecondCard e finaliza passando para o estado de jogo ResolveTurn
+
+ResolveTurnState
+
+Código:
+
+    public class ResolveTurnState : PlayState
+    {
+        public override void Update(GameManager gm)
+        {
+            base.Update(gm);
+    
+            if (gm.FirstCard.Id == gm.SecondCard.Id && !gm.FirstCard.Flipping && !gm.SecondCard.Flipping)
+            {
+                gm.Board.Collect(gm.FirstCard, gm.SecondCard);
+                ScoreManager.NextTurn();
+    
+                if (gm.Board.CardsLeft <= 0)
+                {
+                    gm.ChangeState(GameStates.Win);
+                    ScoreManager.Stop();
+                    ScoreManager.SaveScores();
+                    SoundManager.PlayVictoryFX();
+                }
+                else
+                {
+                    gm.ChangeState(GameStates.FlipFirstCard);
+                }
+            }
+    
+            if (InputManager.MouseClicked && gm.FirstCard.Id != gm.SecondCard.Id)
+            {
+                gm.FirstCard.Flip();
+                gm.SecondCard.Flip();
+                ScoreManager.Miss();
+                gm.ChangeState(GameStates.FlipFirstCard);
+            }
+        }
+    }
+
+Começa por verificar se ambas as cartas são iguais
+
+Se sim coleta ambas as cartas (gm.Board.Collect(gm.FirstCard, gm.SecondCard);) e passa o score manager pro proximo turno (ScoreManager.NextTurn();) e verifica se a quantidade de cartas no tabuleiro de jogo é menor ou igual que zero
+se for é dado o jogo como terminado e é mudado o estado de jogo para o estado de vitória (gm.ChangeState(GameStates.Win);), é parado o score manager (ScoreManager.Stop();) e a pontuação obtida é guardada (ScoreManager.SaveScores();)  e são tocados os efeitos de vitória (SoundManager.PlayVictoryFX();).
