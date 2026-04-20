@@ -293,7 +293,7 @@ A função Update() tem como objetivo detetar se a carta está no processo de se
 
 • Button
 
-A classe Button representa um botão clicável na tela sob os srpites das cartas. Ela vem de Sprite, por isso pode ser inserida como qualquer outro sprite.
+A classe Button representa um botão clicável na tela sob os srpites. Ela vem de Sprite, por isso pode ser inserida como qualquer outro sprite.
 
 Código:
 
@@ -327,9 +327,9 @@ Código:
         }
     }
 
-São gerados botões por cima das cartas para que possam ser clicáveis
+São gerados botões para que possam ser clicáveis e escolhida a dificuldade
 
-A função Update() deteta se o rato está por cima da carta e desabilita-a se estiver a ser virada
+A função Update() deteta se o rato está por cima do botão e muda a sua cor
 
 • Difficulty
 
